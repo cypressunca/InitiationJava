@@ -13,6 +13,7 @@ public class RunZoo {
 
         ZooKeeper manfred = new ZooKeeper(zoo);
         boolean result =manfred.callAnimals();
+
         System.out.println("callAnimals returns ="+ result);
     }
 }
