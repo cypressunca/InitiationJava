@@ -1,29 +1,37 @@
 package zoo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ZooKeeper {
     private Zoo zoo;
 
+    public void setZoo(Zoo zoo) {
+        this.zoo = zoo;
+    }
+
+    private String name;
+
     public ZooKeeper(Zoo zoo) {
         this.zoo = zoo;
     }
+
+
 
     // Méthode pour récupérer les animaux, les appeler, comparer avec une liste de référence
     // et renvoyer le résultat de la comparaison avec la liste de référence.
 
 
     public boolean callAnimals() {
-        Animal[] list = zoo.listAnimals().toArray(new Animal[0]);
-        String[] criRecu = new String[10];
-        int index = 0;
+        List<Animal> list = zoo.listAnimals();
+        List<String> criRecu = new ArrayList<>();
+
         for (Animal animal : list) {
             String cri = animal.crier();
-            criRecu[index++] = cri;
+            criRecu.add(cri);
         }
-
-
 
         // comparer les 2 listes
         // a partir de quel  indice j ai des chaines vides
@@ -31,24 +39,39 @@ public class ZooKeeper {
 
         return compareAnimalLists(criRecu);
 
-
     }
 
 
-    private boolean compareAnimalLists(String[] criRecu) {
-        String[] refList = getReferenceList();
-        // 1  - trouver taille reeflle criRecu
-        int index = 0;
-        for(int i=0;i<criRecu.length;i++){
-            if(criRecu[i]!=null)
-                index++;
+    private boolean compareAnimalLists(List<String> criRecu) {
+     //   public static void compareAnimalLists(List<String> criRecu) {
+     //   List<String> refList = getReferenceList();
+        Map<String, Integer> animalSounds = new HashMap<>();
+
+        // Ajouter des cris d'animaux à la Map
+        animalSounds.put( "Roar",1);
+        animalSounds.put( "CoinCoin",1);
+        //animalSounds.put("Dog", "Bark");
+        //animalSounds.put("Cat", "Meow");
+
+        Map<String,Integer> crisRecusMap = new HashMap<>();
+        for(String cri:criRecu){
+            if(crisRecusMap.containsKey(cri)){
+                int oldValue = crisRecusMap.get(cri);
+                crisRecusMap.put(cri,oldValue++);
+            }
+            else{
+                crisRecusMap.put(cri,1);
+            }
         }
-        System.out.println("index trouvé"+index);
-        return refList.length == index;
+        return animalSounds.equals(crisRecusMap);
+
     }
 
-    private String[] getReferenceList() {
-        String[] list = {"coincoin", "grrrr", "waouf"};
+    private List<String> getReferenceList() {
+        List<String> list = new ArrayList<>();
+        list.add("coincoin");
+        list.add( "grrrr");
+        list.add( "waouf");
         return list;
     }
 }
