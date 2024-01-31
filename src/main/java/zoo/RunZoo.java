@@ -10,6 +10,8 @@ public class RunZoo {
         zoo.addAnimal(new Lion("Arthur",500,12));
         zoo.addAnimal(new Lion("Simba",250,2));
         zoo.addAnimal(new Pinguin("Tobby",12,1));
+        zoo.addAnimal(new Monkey("Tobby",12,1));
+
 
         ZooKeeper manfred = new ZooKeeper(zoo);
         boolean result =manfred.callAnimals();

@@ -1,5 +1,7 @@
 package zoo;
 
+import com.google.common.collect.Maps;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class ZooKeeper {
 
     public boolean callAnimals() {
         List<Animal> list = zoo.listAnimals();
+        System.out.println("animalsList:"+  list);
         List<String> criRecu = new ArrayList<>();
 
         for (Animal animal : list) {
@@ -33,6 +36,7 @@ public class ZooKeeper {
             criRecu.add(cri);
         }
 
+        System.out.println("crIrecu ="+ criRecu);
         // comparer les 2 listes
         // a partir de quel  indice j ai des chaines vides
         // comparer les tailles des 2 listes
@@ -50,28 +54,32 @@ public class ZooKeeper {
         // Ajouter des cris d'animaux à la Map
         animalSounds.put( "Roar",1);
         animalSounds.put( "CoinCoin",1);
-        //animalSounds.put("Dog", "Bark");
+        animalSounds.put("waouf", 1);
         //animalSounds.put("Cat", "Meow");
 
         Map<String,Integer> crisRecusMap = new HashMap<>();
         for(String cri:criRecu){
             if(crisRecusMap.containsKey(cri)){
+                System.out.println(cri + " already in map");
                 int oldValue = crisRecusMap.get(cri);
-                crisRecusMap.put(cri,oldValue++);
+                oldValue++;
+                crisRecusMap.put(cri,Integer.valueOf(oldValue));
             }
             else{
                 crisRecusMap.put(cri,1);
             }
         }
-        return animalSounds.equals(crisRecusMap);
+        System.out.println("CrisRecusMap :"+ crisRecusMap);
+        System.out.println("AnimalSoundsMap :"+ animalSounds);
+        return Maps.difference(animalSounds,crisRecusMap).areEqual();//animalSounds.equals(crisRecusMap);
 
     }
 
-    private List<String> getReferenceList() {
-        List<String> list = new ArrayList<>();
-        list.add("coincoin");
-        list.add( "grrrr");
-        list.add( "waouf");
-        return list;
-    }
+//    private List<String> getReferenceList() {
+//        List<String> list = new ArrayList<>();
+//        list.add("coincoin");
+//        list.add( "grrrr");
+//        list.add( "waouf");
+//        return list;
+//    }
 }
